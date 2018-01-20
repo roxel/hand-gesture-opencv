@@ -15,6 +15,14 @@ Based on [lzane/Fingers-Detection-using-OpenCV-and-Python](https://github.com/lz
 Developed on: Mac OS Sierra, Python: 3.6.1 (with NumPy: 1.14.0), OpenCV: 3.4.0
 
 
+Demo
+----
+
+Demo video recording is available on Youtube:
+
+[![<https://youtu.be/DFwsiWGGpjA>](https://img.youtube.com/vi/DFwsiWGGpjA/0.jpg)](https://www.youtube.com/watch?v=DFwsiWGGpjA)
+
+
 Processing flow
 ---------------
 
@@ -42,4 +50,4 @@ We assume that hand will be the biggest shape on the frame. We find the convex h
 
 ### Detecting hand pose
 
-Hand posed is detected by calculating number of fingers and angles in the hand shape.
+Hand poses are detected by calculating number of fingers on the image, comparing surfaces and angles in the hand shape.
