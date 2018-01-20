@@ -78,23 +78,29 @@ def processShape(extractedMask, original):
         result = contours[contourIndex]
         hull = cv2.convexHull(result)
 
-        cv2.drawContours(original, [result], 0, (0, 255, 0), 2)
+        cv2.drawContours(original, [result], 0, (255, 255, 255), 2)
         cv2.drawContours(original, [hull], 0, (0, 0, 255), 3)
 
         return result
     return None
 
 
-def detect_hand_pose(shape, original):
-    if shape is None:
-        return NONE
-    calculated, count = calculateFingers(shape, original)
-    if calculated:
-        if count == 0:
-            return FIST
-        elif 4 <= count <= 5:
-            return FINGERS_SPREAD
-    return NONE
+def detect_hand_pose(shape, original, text=False):
+    result = NONE
+    if shape is not None:
+        calculated, count = calculateFingers(shape, original)
+        if calculated:
+            if count == 0:
+                result = FIST
+            elif 4 <= count <= 5:
+                result = FINGERS_SPREAD
+    if text:
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        # origin = original.shape[1] // 2, original.shape[0] - 100
+        origin = 80, original.shape[0] - 100
+        fontScale = 1
+        cv2.putText(original, result[1], origin, font, fontScale, (255, 255, 255))
+    return result
 
 
 def captureImage(camera, backgroundModel):
@@ -108,7 +114,7 @@ def captureImage(camera, backgroundModel):
         foregroundImage = removeBackground(original, backgroundModel)
         extractedMask = extractShape(foregroundImage)
         data = processShape(extractedMask, original)
-        hand_pose = detect_hand_pose(data, original)
+        hand_pose = detect_hand_pose(data, original, text=True)
         cv2.imshow('original', original)
     return hand_pose
 
