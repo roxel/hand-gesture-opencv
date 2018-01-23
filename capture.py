@@ -85,7 +85,7 @@ def processShape(extractedMask, original):
     return None
 
 
-def detect_hand_pose(shape, original, text=False):
+def detectHandPose(shape, original, text=False):
     result = NONE
     if shape is not None:
         calculated, count = calculateFingers(shape, original)
@@ -96,7 +96,6 @@ def detect_hand_pose(shape, original, text=False):
                 result = FINGERS_SPREAD
     if text:
         font = cv2.FONT_HERSHEY_SIMPLEX
-        # origin = original.shape[1] // 2, original.shape[0] - 100
         origin = 80, original.shape[0] - 100
         fontScale = 1
         cv2.putText(original, result[1], origin, font, fontScale, (255, 255, 255))
@@ -109,14 +108,14 @@ def captureImage(camera, backgroundModel):
     original = cv2.bilateralFilter(original, 5, 50, 100)  # smoothing filter
     original = cv2.flip(original, 1)  # flip the frame horizontally for mirror effect
 
-    hand_pose = NONE
+    handPose = NONE
     if backgroundModel:
         foregroundImage = removeBackground(original, backgroundModel)
         extractedMask = extractShape(foregroundImage)
         data = processShape(extractedMask, original)
-        hand_pose = detect_hand_pose(data, original, text=True)
+        handPose = detectHandPose(data, original, text=True)
         cv2.imshow('original', original)
-    return hand_pose
+    return handPose
 
 
 if __name__ == '__main__':
@@ -125,9 +124,9 @@ if __name__ == '__main__':
     backgroundModel = getBackgroundModel(camera)
     bgModelIsSet = backgroundModel is not None
     while camera.isOpened() and bgModelIsSet:
-        hand_pose = captureImage(camera, backgroundModel)
-        hand_pose_name = hand_pose[1] if hand_pose else "not found"
-        print("hand pose at %s: %s" % (str(datetime.now()), hand_pose_name))
+        handPose = captureImage(camera, backgroundModel)
+        handPoseName = handPose[1] if handPose else "not found"
+        print("hand pose at %s: %s" % (str(datetime.now()), handPoseName))
         key = cv2.waitKey(100)
         if key == 27 or key == ord('q'):  # press ESC or 'q' to exit
             break
