@@ -2,7 +2,7 @@ Hand pose detection using camera image
 ======================================
 
 * Done using OpenCV in Python 3
-* Project is an attempt to detect same gestures as [https://support.getmyo.com/hc/en-us/articles/202647853](Myo EMG tracking device) detects.
+* Project is an attempt to detect same gestures as [Myo EMG tracking device](https://support.getmyo.com/hc/en-us/articles/202647853) detects.
 
 Based on [lzane/Fingers-Detection-using-OpenCV-and-Python](https://github.com/lzane/Fingers-Detection-using-OpenCV-and-Python):
 
